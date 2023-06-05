@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS categories;
 CREATE TABLE categories(
     category_major_cd    VARCHAR(2) NOT NULL,
     category_major_name  VARCHAR(32) DEFAULT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE categories(
     PRIMARY KEY (category_small_cd)
 );
 
-DROP TABLE IF EXISTS customer;
+DROP TABLE IF EXISTS customers;
 CREATE TABLE customers(
     customer_id          VARCHAR(14) NOT NULL,
     customer_name        VARCHAR(20) DEFAULT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE customers(
     PRIMARY KEY (customer_id)
 );
 
-DROP TABLE IF EXISTS geocode;
+DROP TABLE IF EXISTS geocodes;
 CREATE TABLE geocodes(
     postal_cd    VARCHAR(8) DEFAULT NULL,
     prefecture   VARCHAR(4) DEFAULT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE geocodes(
     latitude     NUMERIC DEFAULT NULL
 );
 
-DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS products;
 CREATE TABLE products(
     product_cd         VARCHAR(10) NOT NULL,
     category_major_cd  VARCHAR(2) DEFAULT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE products(
     PRIMARY KEY (product_cd)
 );
 
-DROP TABLE IF EXISTS receipt;
+DROP TABLE IF EXISTS receipts;
 CREATE TABLE receipts(
     sales_ymd      INTEGER NOT NULL,
     sales_epoch    INTEGER DEFAULT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE receipts(
     PRIMARY KEY (sales_ymd, store_cd, receipt_no, receipt_sub_no)
 );
 
-DROP TABLE IF EXISTS store;
+DROP TABLE IF EXISTS stores;
 CREATE TABLE stores(
     store_cd      VARCHAR(6) NOT NULL,
     store_name    VARCHAR(128) DEFAULT NULL,

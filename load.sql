@@ -1,106 +1,106 @@
-load data local
-infile './data/category.csv'
-into table
+LOAD DATA LOCAL
+INFILE './data/category.csv'
+INTO TABLE
     categories
-fields
-    terminated by ','
-lines
-    terminated by '\r\n'
-ignore 1 lines
-set
-    category_major_cd = nullif(category_major_cd, ''),
-    category_major_name = nullif(category_major_name, ''),
-    category_medium_cd = nullif(category_medium_cd, ''),
-    category_medium_name = nullif(category_medium_name, ''),
-    category_small_cd = nullif(category_small_cd, ''),
-    category_small_name = nullif(category_small_name, '');
+FIELDS
+    TERMINATED by ','
+LINES
+    TERMINATED by '\r\n'
+IGNORE 1 LINES
+SET
+    category_major_cd = NULLIF(category_major_cd, ''),
+    category_major_name = NULLIF(category_major_name, ''),
+    category_medium_cd = NULLIF(category_medium_cd, ''),
+    category_medium_name = NULLIF(category_medium_name, ''),
+    category_small_cd = NULLIF(category_small_cd, ''),
+    category_small_name = NULLIF(category_small_name, '');
 
-load data local
-infile './data/customer.csv'
-into table
+LOAD DATA LOCAL
+INFILE './data/customer.csv'
+INTO TABLE
     customers
-fields
-    terminated by ','
-ignore 1 lines
-set
-    customer_id = nullif(customer_id, ''),
-    customer_name = nullif(customer_name, ''),
-    gender_cd = nullif(gender_cd, ''),
-    gender = nullif(gender, ''),
-    birth_day = nullif(birth_day, '0000-00-00'),
-    age = nullif(age, 0),
-    postal_cd = nullif(postal_cd, ''),
-    address = nullif(address, ''),
-    application_store_cd = nullif(application_store_cd, ''),
-    application_date = nullif(application_date, ''),
-    status_cd = nullif(status_cd, '');
+FIELDS
+    TERMINATED by ','
+IGNORE 1 LINES
+SET
+    customer_id = NULLIF(customer_id, ''),
+    customer_name = NULLIF(customer_name, ''),
+    gender_cd = NULLIF(gender_cd, ''),
+    gender = NULLIF(gender, ''),
+    birth_day = NULLIF(birth_day, '0000-00-00'),
+    age = NULLIF(age, 0),
+    postal_cd = NULLIF(postal_cd, ''),
+    address = NULLIF(address, ''),
+    application_store_cd = NULLIF(application_store_cd, ''),
+    application_date = NULLIF(application_date, ''),
+    status_cd = NULLIF(status_cd, '');
 
-load data local
-infile './data/geocode.csv'
-into table
+LOAD DATA LOCAL
+INFILE './data/geocode.csv'
+INTO TABLE
     geocodes
-fields
-    terminated by ','
-ignore 1 lines
-set
-    postal_cd = nullif(postal_cd, ''),
-    prefecture = nullif(prefecture, ''),
-    city = nullif(city, ''),
-    town = nullif(town, ''),
-    street = nullif(street, ''),
-    address = nullif(address, ''),
-    full_address = nullif(full_address, ''),
-    longitude = nullif(longitude, 0),
-    latitude = nullif(latitude, 0);
+FIELDS
+    TERMINATED by ','
+IGNORE 1 LINES
+SET
+    postal_cd = NULLIF(postal_cd, ''),
+    prefecture = NULLIF(prefecture, ''),
+    city = NULLIF(city, ''),
+    town = NULLIF(town, ''),
+    street = NULLIF(street, ''),
+    address = NULLIF(address, ''),
+    full_address = NULLIF(full_address, ''),
+    longitude = NULLIF(longitude, 0),
+    latitude = NULLIF(latitude, 0);
 
-load data local
-infile './data/product.csv'
-into table
+LOAD DATA LOCAL
+INFILE './data/product.csv'
+INTO TABLE
     products
-fields
-    terminated by ','
-ignore 1 lines
-set
-    product_cd = nullif(product_cd, ''),
-    category_major_cd = nullif(category_major_cd, ''),
-    category_medium_cd = nullif(category_medium_cd, ''),
-    category_small_cd = nullif(category_small_cd, ''),
-    unit_price = nullif(unit_price, 0),
-    unit_cost = nullif(unit_cost, 0);
+FIELDS
+    TERMINATED by ','
+IGNORE 1 LINES
+SET
+    product_cd = NULLIF(product_cd, ''),
+    category_major_cd = NULLIF(category_major_cd, ''),
+    category_medium_cd = NULLIF(category_medium_cd, ''),
+    category_small_cd = NULLIF(category_small_cd, ''),
+    unit_price = NULLIF(unit_price, 0),
+    unit_cost = NULLIF(unit_cost, 0);
 
-load data local
-infile './data/receipt.csv'
-into table
+LOAD DATA LOCAL
+INFILE './data/receipt.csv'
+INTO TABLE
     receipts
-fields
-    terminated by ','
-ignore 1 lines
-set
-    sales_ymd = nullif(sales_ymd, 0),
-    sales_epoch = nullif(sales_epoch, 0),
-    store_cd = nullif(store_cd, ''),
-    receipt_no = nullif(receipt_no, 0),
-    receipt_sub_no = nullif(receipt_sub_no, 0),
-    customer_id = nullif(customer_id, ''),
-    product_cd = nullif(product_cd, ''),
-    quantity = nullif(quantity, 0),
-    amount = nullif(amount, 0);
+FIELDS
+    TERMINATED by ','
+IGNORE 1 LINES
+SET
+    sales_ymd = NULLIF(sales_ymd, 0),
+    sales_epoch = NULLIF(sales_epoch, 0),
+    store_cd = NULLIF(store_cd, ''),
+    receipt_no = NULLIF(receipt_no, 0),
+    receipt_sub_no = NULLIF(receipt_sub_no, 0),
+    customer_id = NULLIF(customer_id, ''),
+    product_cd = NULLIF(product_cd, ''),
+    quantity = NULLIF(quantity, 0),
+    amount = NULLIF(amount, 0);
 
-load data local
-infile './data/store.csv'
-into table
+LOAD DATA LOCAL
+INFILE './data/store.csv'
+INTO TABLE
     stores
-fields
-    terminated by ','
-ignore 1 lines
-set
-    store_cd = nullif(store_cd, ''),
-    store_name = nullif(store_name, ''),
-    prefecture_cd = nullif(prefecture_cd, ''),
-    prefecture = nullif(prefecture, ''),
-    address = nullif(address, ''),
-    address_kana = nullif(address_kana, ''),
-    tel_no = nullif(tel_no, ''),
-    longitude = nullif(longitude, 0),
-    latitude = nullif(latitude, 0),
-    floor_area = nullif(floor_area, 0);
+FIELDS
+    TERMINATED by ','
+IGNORE 1 LINES
+SET
+    store_cd = NULLIF(store_cd, ''),
+    store_name = NULLIF(store_name, ''),
+    prefecture_cd = NULLIF(prefecture_cd, ''),
+    prefecture = NULLIF(prefecture, ''),
+    address = NULLIF(address, ''),
+    address_kana = NULLIF(address_kana, ''),
+    tel_no = NULLIF(tel_no, ''),
+    longitude = NULLIF(longitude, 0),
+    latitude = NULLIF(latitude, 0),
+    floor_area = NULLIF(floor_area, 0);
