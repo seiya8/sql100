@@ -3,7 +3,7 @@
 ## 環境
 MariaDB 10.4.22
 ## 準備
-データベースの作成、テーブルの作成、CSVからテーブルにインポート
+データベースの作成、テーブルの作成、CSVからテーブルにインポート。テーブル名は複数形に変えた。
 ```bash
 $ echo 'create database ds_knock;' | mysql -uroot
 $ mysql -uroot ds_knock < create.sql
