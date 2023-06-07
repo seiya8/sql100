@@ -1,0 +1,11 @@
+MariaDB [ds_knock]> select store_cd, variance(amount) from receipts group by store_cd order by variance(amount) desc limit 5;
++----------+------------------+
+| store_cd | variance(amount) |
++----------+------------------+
+| S13052   |      440088.7013 |
+| S14011   |      306314.5582 |
+| S14034   |      296920.0810 |
+| S13001   |      295431.9933 |
+| S13015   |      295294.3611 |
++----------+------------------+
+5 rows in set (0.120 sec)

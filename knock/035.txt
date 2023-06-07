@@ -1,0 +1,33 @@
+MariaDB [ds_knock]> with agg as (
+    ->     select
+    ->     customer_id,
+    ->     sum(amount) as sum_amount
+    ->     from receipts
+    ->     where customer_id not like 'Z%'
+    ->     group by customer_id
+    -> )
+    -> select
+    -> customer_id,
+    -> sum_amount
+    -> from agg
+    -> where sum_amount >= (
+    ->     select
+    ->     avg(sum_amount)
+    ->     from agg
+    -> )
+    -> limit 10;
++----------------+------------+
+| customer_id    | sum_amount |
++----------------+------------+
+| CS001115000010 |       3044 |
+| CS001205000006 |       3337 |
+| CS001214000009 |       4685 |
+| CS001214000017 |       4132 |
+| CS001214000052 |       5639 |
+| CS001215000040 |       3496 |
+| CS001304000006 |       3726 |
+| CS001305000005 |       3485 |
+| CS001305000011 |       4370 |
+| CS001315000180 |       3300 |
++----------------+------------+
+10 rows in set (0.227 sec)

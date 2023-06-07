@@ -1,0 +1,12 @@
+MariaDB [ds_knock]> select distinct
+    -> percentile_cont(0.25) within group(order by amount) over (partition by -1) as amount25,
+    -> percentile_cont(0.5) within group(order by amount) over (partition by -1) as amount50,
+    -> percentile_cont(0.75) within group(order by amount) over (partition by -1) as amount75,
+    -> percentile_cont(1) within group(order by amount) over (partition by -1) as amount100
+    -> from receipts;
++----------------+----------------+----------------+------------------+
+| amount25       | amount50       | amount75       | amount100        |
++----------------+----------------+----------------+------------------+
+| 102.0000000000 | 170.0000000000 | 288.0000000000 | 10925.0000000000 |
++----------------+----------------+----------------+------------------+
+1 row in set (0.258 sec)

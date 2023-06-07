@@ -1,0 +1,11 @@
+MariaDB [ds_knock]> select store_cd, stddev(amount) from receipts group by store_cd order by stddev(amount) desc limit 5;
++----------+----------------+
+| store_cd | stddev(amount) |
++----------+----------------+
+| S13052   |       663.3918 |
+| S14011   |       553.4569 |
+| S14034   |       544.9037 |
+| S13001   |       543.5366 |
+| S13015   |       543.4099 |
++----------+----------------+
+5 rows in set (0.097 sec)
