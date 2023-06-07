@@ -1,0 +1,7 @@
+MariaDB [ds_knock]> select count(distinct customer_id) from receipts;
++-----------------------------+
+| count(distinct customer_id) |
++-----------------------------+
+|                        8307 |
++-----------------------------+
+1 row in set (0.109 sec)

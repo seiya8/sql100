@@ -1,0 +1,7 @@
+MariaDB [ds_knock]> select count(*) from receipts;
++----------+
+| count(*) |
++----------+
+|   104681 |
++----------+
+1 row in set (0.025 sec)
