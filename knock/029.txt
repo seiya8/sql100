@@ -1,0 +1,27 @@
+MariaDB [ds_knock]> select
+    -> r2.store_cd,
+    -> (select product_cd
+    -> from receipts r1
+    -> where r1.store_cd = r2.store_cd
+    -> group by product_cd
+    -> order by count(product_cd) desc
+    -> limit 1) as mode_product_cd
+    -> from receipts r2
+    -> group by r2.store_cd
+    -> limit 10
+    -> ;
++----------+-----------------+
+| store_cd | mode_product_cd |
++----------+-----------------+
+| S12007   | P060303001      |
+| S12013   | P060303001      |
+| S12014   | P060303001      |
+| S12029   | P060303001      |
+| S12030   | P060303001      |
+| S13001   | P060303001      |
+| S13002   | P060303001      |
+| S13003   | P071401001      |
+| S13004   | P060303001      |
+| S13005   | P040503001      |
++----------+-----------------+
+10 rows in set (2.528 sec)

@@ -1,0 +1,11 @@
+MariaDB [ds_knock]> select distinct store_cd, median(amount) over (partition by store_cd) as median_amount from receipts order by median_amount desc limit 5;
++----------+----------------+
+| store_cd | median_amount  |
++----------+----------------+
+| S13052   | 190.0000000000 |
+| S14010   | 188.0000000000 |
+| S14050   | 185.0000000000 |
+| S14040   | 180.0000000000 |
+| S13003   | 180.0000000000 |
++----------+----------------+
+5 rows in set (0.156 sec)

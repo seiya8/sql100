@@ -1,0 +1,11 @@
+MariaDB [ds_knock]> select store_cd, avg(amount) from receipts group by store_cd order by avg(amount) desc limit 5;
++----------+-------------+
+| store_cd | avg(amount) |
++----------+-------------+
+| S13052   |    402.8675 |
+| S13015   |    351.1120 |
+| S13003   |    350.9155 |
+| S14010   |    348.7913 |
+| S13001   |    348.4704 |
++----------+-------------+
+5 rows in set (0.110 sec)
