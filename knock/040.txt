@@ -1,0 +1,7 @@
+MariaDB [ds_knock]> select count(*) from stores cross join products;
++----------+
+| count(*) |
++----------+
+|   531590 |
++----------+
+1 row in set (0.076 sec)

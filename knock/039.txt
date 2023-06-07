@@ -1,0 +1,74 @@
+MariaDB [ds_knock]> with agg1 as (
+    ->     select
+    ->     customer_id,
+    ->     count(distinct sales_ymd) as day_count
+    ->     from receipts
+    ->     where customer_id not like 'Z%'
+    ->     group by customer_id
+    ->     order by day_count desc
+    ->     limit 20
+    -> ),
+    -> agg2 as (
+    ->     select
+    ->     customer_id,
+    ->     sum(amount) as sum_amount
+    ->     from receipts
+    ->     where customer_id not like 'Z%'
+    ->     group by customer_id
+    ->     order by sum_amount desc
+    ->     limit 20
+    -> )
+    -> select
+    -> coalesce(agg1.customer_id, agg2.customer_id),
+    -> agg1.day_count,
+    -> agg2.sum_amount
+    -> from agg1
+    -> left outer join agg2
+    -> on agg1.customer_id = agg2.customer_id
+    -> union
+    -> select
+    -> coalesce(agg1.customer_id, agg2.customer_id),
+    -> agg1.day_count,
+    -> agg2.sum_amount
+    -> from agg1
+    -> right outer join agg2
+    -> on agg1.customer_id = agg2.customer_id;
++----------------------------------------------+-----------+------------+
+| coalesce(agg1.customer_id, agg2.customer_id) | day_count | sum_amount |
++----------------------------------------------+-----------+------------+
+| CS040214000008                               |        23 |       NULL |
+| CS010214000010                               |        22 |      18585 |
+| CS015415000185                               |        22 |      20153 |
+| CS028415000007                               |        21 |      19127 |
+| CS010214000002                               |        21 |       NULL |
+| CS016415000141                               |        20 |      18372 |
+| CS017415000097                               |        20 |      23086 |
+| CS039414000052                               |        19 |       NULL |
+| CS022515000226                               |        19 |       NULL |
+| CS021515000172                               |        19 |       NULL |
+| CS031414000051                               |        19 |      19202 |
+| CS021514000045                               |        19 |       NULL |
+| CS014214000023                               |        19 |       NULL |
+| CS022515000028                               |        18 |       NULL |
+| CS031414000073                               |        18 |       NULL |
+| CS032415000209                               |        18 |       NULL |
+| CS021515000211                               |        18 |       NULL |
+| CS021515000056                               |        18 |       NULL |
+| CS030214000008                               |        18 |       NULL |
+| CS007515000107                               |        18 |       NULL |
+| CS001605000009                               |      NULL |      18925 |
+| CS006515000023                               |      NULL |      18372 |
+| CS011414000106                               |      NULL |      18338 |
+| CS038415000104                               |      NULL |      17847 |
+| CS035414000024                               |      NULL |      17615 |
+| CS021515000089                               |      NULL |      17580 |
+| CS032414000072                               |      NULL |      16563 |
+| CS016415000101                               |      NULL |      16348 |
+| CS011415000006                               |      NULL |      16094 |
+| CS034415000047                               |      NULL |      16083 |
+| CS007514000094                               |      NULL |      15735 |
+| CS009414000059                               |      NULL |      15492 |
+| CS030415000034                               |      NULL |      15468 |
+| CS015515000034                               |      NULL |      15300 |
++----------------------------------------------+-----------+------------+
+34 rows in set (0.409 sec)

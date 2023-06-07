@@ -1,0 +1,29 @@
+MariaDB [ds_knock]> select
+    -> c.customer_id,
+    -> coalesce(agg.sum_amount, 0)
+    -> from customers c
+    -> left join (
+    ->     select
+    ->     customer_id,
+    ->     sum(amount) as sum_amount
+    ->     from receipts
+    ->     where customer_id not like 'Z%'
+    ->     group by customer_id
+    -> ) agg
+    -> on c.customer_id = agg.customer_id
+    -> limit 10;
++----------------+-----------------------------+
+| customer_id    | coalesce(agg.sum_amount, 0) |
++----------------+-----------------------------+
+| CS001105000001 |                           0 |
+| CS001112000009 |                           0 |
+| CS001112000019 |                           0 |
+| CS001112000021 |                           0 |
+| CS001112000023 |                           0 |
+| CS001112000024 |                           0 |
+| CS001112000029 |                           0 |
+| CS001112000030 |                           0 |
+| CS001113000004 |                        1298 |
+| CS001113000010 |                           0 |
++----------------+-----------------------------+
+10 rows in set (0.120 sec)
