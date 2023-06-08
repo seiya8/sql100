@@ -1,0 +1,28 @@
+MariaDB [ds_knock]> with day_amount as (
+    ->     select
+    ->     sales_ymd,
+    ->     sum(amount) as sum_amount
+    ->     from receipts
+    ->     group by sales_ymd
+    ->     order by sales_ymd
+    -> )
+    -> select
+    -> sales_ymd,
+    -> sum_amount - lag(sum_amount, 1) over (order by sales_ymd) as diff_amount
+    -> from day_amount
+    -> limit 10;
++-----------+-------------+
+| sales_ymd | diff_amount |
++-----------+-------------+
+|  20170101 |        NULL |
+|  20170102 |       -9558 |
+|  20170103 |        3338 |
+|  20170104 |        8662 |
+|  20170105 |        1665 |
+|  20170106 |       -5443 |
+|  20170107 |       -8972 |
+|  20170108 |        1322 |
+|  20170109 |        1981 |
+|  20170110 |       -6575 |
++-----------+-------------+
+10 rows in set (0.039 sec)

@@ -1,0 +1,31 @@
+MariaDB [ds_knock]> with day_amount as (
+    ->     select
+    ->     sales_ymd,
+    ->     sum(amount) as sum_amount
+    ->     from receipts
+    ->     group by sales_ymd
+    ->     order by sales_ymd
+    -> )
+    -> select
+    -> sales_ymd,
+    -> sum_amount,
+    -> lag(sum_amount, 1) over (order by sales_ymd) as lag_amount1,
+    -> lag(sum_amount, 2) over (order by sales_ymd) as lag_amount2,
+    -> lag(sum_amount, 3) over (order by sales_ymd) as lag_amount3
+    -> from day_amount
+    -> limit 10;
++-----------+------------+-------------+-------------+-------------+
+| sales_ymd | sum_amount | lag_amount1 | lag_amount2 | lag_amount3 |
++-----------+------------+-------------+-------------+-------------+
+|  20170101 |      33723 |        NULL |        NULL |        NULL |
+|  20170102 |      24165 |       33723 |        NULL |        NULL |
+|  20170103 |      27503 |       24165 |       33723 |        NULL |
+|  20170104 |      36165 |       27503 |       24165 |       33723 |
+|  20170105 |      37830 |       36165 |       27503 |       24165 |
+|  20170106 |      32387 |       37830 |       36165 |       27503 |
+|  20170107 |      23415 |       32387 |       37830 |       36165 |
+|  20170108 |      24737 |       23415 |       32387 |       37830 |
+|  20170109 |      26718 |       24737 |       23415 |       32387 |
+|  20170110 |      20143 |       26718 |       24737 |       23415 |
++-----------+------------+-------------+-------------+-------------+
+10 rows in set (0.045 sec)
