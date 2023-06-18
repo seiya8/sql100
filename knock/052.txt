@@ -1,0 +1,22 @@
+MariaDB [ds_knock]> select
+    -> customer_id,
+    -> case when sum(amount) > 2000 then 1 else 0 end as amount_over_2000
+    -> from receipts
+    -> where customer_id not like 'Z%'
+    -> group by customer_id
+    -> limit 10;
++----------------+------------------+
+| customer_id    | amount_over_2000 |
++----------------+------------------+
+| CS001113000004 |                0 |
+| CS001114000005 |                0 |
+| CS001115000010 |                1 |
+| CS001205000004 |                0 |
+| CS001205000006 |                1 |
+| CS001211000025 |                0 |
+| CS001212000027 |                0 |
+| CS001212000031 |                0 |
+| CS001212000046 |                0 |
+| CS001212000070 |                0 |
++----------------+------------------+
+10 rows in set (0.166 sec)
