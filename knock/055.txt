@@ -1,0 +1,39 @@
+MariaDB [ds_knock]> with pct as (
+    ->     select distinct
+    ->     percentile_cont(0.25) within group(order by sum_amount) over (partition by -1) as amount25,
+    ->     percentile_cont(0.5) within group(order by sum_amount) over (partition by -1) as amount50,
+    ->     percentile_cont(0.75) within group(order by sum_amount) over (partition by -1) as amount75,
+    ->     percentile_cont(1) within group(order by sum_amount) over (partition by -1) as amount100
+    ->     from (select
+    ->         sum(amount) as sum_amount
+    ->         from receipts
+    ->         group by customer_id
+    ->     ) agg
+    -> )
+    -> select
+    -> customer_id,
+    -> case
+    ->     when sum(amount) < amount25 then 1
+    ->     when sum(amount) < amount50 then 2
+    ->     when sum(amount) < amount75 then 3
+    ->     else 4
+    ->     end as amount_quartile
+    -> from receipts
+    -> cross join pct
+    -> group by customer_id
+    -> limit 10;
++----------------+-----------------+
+| customer_id    | amount_quartile |
++----------------+-----------------+
+| CS001113000004 |               2 |
+| CS001114000005 |               2 |
+| CS001115000010 |               3 |
+| CS001205000004 |               3 |
+| CS001205000006 |               3 |
+| CS001211000025 |               1 |
+| CS001212000027 |               1 |
+| CS001212000031 |               1 |
+| CS001212000046 |               1 |
+| CS001212000070 |               1 |
++----------------+-----------------+
+10 rows in set (0.328 sec)

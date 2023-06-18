@@ -1,0 +1,31 @@
+MariaDB [ds_knock]> select
+    -> concat(gender, '_', cast(age_group as char), 's')
+    -> from (
+    ->     select
+    ->     case
+    ->         when gender_cd = 0 then 'male'
+    ->         when gender_cd = 1 then 'female'
+    ->         else 'unknown'
+    ->         end as gender,
+    ->     case
+    ->         when (age div 10) * 10 < 60 then (age div 10) * 10
+    ->         else 60
+    ->         end as age_group
+    ->     from customers
+    -> ) tmp
+    -> limit 10;
++---------------------------------------------------+
+| concat(gender, '_', cast(age_group as char), 's') |
++---------------------------------------------------+
+| male_10s                                          |
+| female_10s                                        |
+| female_10s                                        |
+| female_10s                                        |
+| female_10s                                        |
+| female_10s                                        |
+| female_10s                                        |
+| female_10s                                        |
+| female_10s                                        |
+| female_10s                                        |
++---------------------------------------------------+
+10 rows in set (0.001 sec)
