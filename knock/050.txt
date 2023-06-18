@@ -1,0 +1,16 @@
+MariaDB [ds_knock]> select receipt_no, receipt_sub_no, from_unixtime(sales_epoch, '%m') as sales_epoch from receipts limit 10;
++------------+----------------+-------------+
+| receipt_no | receipt_sub_no | sales_epoch |
++------------+----------------+-------------+
+|       1112 |              1 | 01          |
+|       1142 |              2 | 01          |
+|       1172 |              2 | 01          |
+|       1152 |              1 | 01          |
+|       1152 |              2 | 01          |
+|       1172 |              1 | 01          |
+|        112 |              1 | 01          |
+|        112 |              2 | 01          |
+|       1132 |              1 | 01          |
+|       1192 |              1 | 01          |
++------------+----------------+-------------+
+10 rows in set (0.002 sec)
