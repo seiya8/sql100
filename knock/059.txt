@@ -1,0 +1,35 @@
+MariaDB [ds_knock]> with avgstd as (
+    ->     select
+    ->     avg(sum_amount) as avg_amount,
+    ->     stddev(sum_amount) as std_amount
+    ->     from (
+    ->         select
+    ->         sum(amount) as sum_amount
+    ->         from receipts
+    ->         where customer_id not like 'Z%'
+    ->         group by customer_id
+    ->     ) tmp
+    -> )
+    -> select
+    -> customer_id,
+    -> sum(amount) as sum_amount,
+    -> (sum(amount) - avg_amount) / std_amount as amount_z_score
+    -> from receipts
+    -> cross join avgstd
+    -> group by customer_id
+    -> limit 10;
++----------------+------------+----------------+
+| customer_id    | sum_amount | amount_z_score |
++----------------+------------+----------------+
+| CS001113000004 |       1298 |    -0.45937787 |
+| CS001114000005 |        626 |    -0.70639035 |
+| CS001115000010 |       3044 |     0.18241350 |
+| CS001205000004 |       1988 |    -0.20574898 |
+| CS001205000006 |       3337 |     0.29011389 |
+| CS001211000025 |        456 |    -0.76887863 |
+| CS001212000027 |        448 |    -0.77181926 |
+| CS001212000031 |        296 |    -0.82769113 |
+| CS001212000046 |        228 |    -0.85268644 |
+| CS001212000070 |        456 |    -0.76887863 |
++----------------+------------+----------------+
+10 rows in set (0.285 sec)

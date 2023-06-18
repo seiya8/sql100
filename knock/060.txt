@@ -1,0 +1,35 @@
+MariaDB [ds_knock]> with minmax as (
+    ->     select
+    ->     min(sum_amount) as min_amount,
+    ->     max(sum_amount) as max_amount
+    ->     from (
+    ->         select
+    ->         sum(amount) as sum_amount
+    ->         from receipts
+    ->         where customer_id not like 'Z%'
+    ->         group by customer_id
+    ->     ) tmp
+    -> )
+    -> select
+    -> customer_id,
+    -> sum(amount) as sum_amount,
+    -> (sum(amount) - min_amount) / (max_amount - min_amount) as amount_minmax_score
+    -> from receipts
+    -> cross join minmax
+    -> group by customer_id
+    -> limit 10;
++----------------+------------+---------------------+
+| customer_id    | sum_amount | amount_minmax_score |
++----------------+------------+---------------------+
+| CS001113000004 |       1298 |              0.0534 |
+| CS001114000005 |        626 |              0.0242 |
+| CS001115000010 |       3044 |              0.1292 |
+| CS001205000004 |       1988 |              0.0833 |
+| CS001205000006 |       3337 |              0.1419 |
+| CS001211000025 |        456 |              0.0168 |
+| CS001212000027 |        448 |              0.0164 |
+| CS001212000031 |        296 |              0.0098 |
+| CS001212000046 |        228 |              0.0069 |
+| CS001212000070 |        456 |              0.0168 |
++----------------+------------+---------------------+
+10 rows in set (0.286 sec)
