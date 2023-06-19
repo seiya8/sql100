@@ -1,0 +1,24 @@
+MariaDB [ds_knock]> select
+    -> c.customer_id,
+    -> cast(r.sales_ymd as date) as sales_ymd,
+    -> cast(c.application_date as date) as application_date,
+    -> timestampdiff(year, cast(c.application_date as date), cast(r.sales_ymd as date)) as elapsed_years
+    -> from receipts r
+    -> join customers c
+    -> on r.customer_id = c.customer_id
+    -> limit 10;
++----------------+------------+------------------+---------------+
+| customer_id    | sales_ymd  | application_date | elapsed_years |
++----------------+------------+------------------+---------------+
+| CS014411000048 | 2017-01-01 | 2015-06-10       |             1 |
+| CS014411000048 | 2017-01-01 | 2015-06-10       |             1 |
+| CS029214000004 | 2017-01-01 | 2015-04-04       |             1 |
+| CS029214000004 | 2017-01-01 | 2015-04-04       |             1 |
+| CS029414000005 | 2017-01-01 | 2015-08-24       |             1 |
+| CS029414000005 | 2017-01-01 | 2015-08-24       |             1 |
+| CS001414000126 | 2017-01-01 | 2015-02-05       |             1 |
+| CS001414000126 | 2017-01-01 | 2015-02-05       |             1 |
+| CS008214000024 | 2017-01-01 | 2015-01-27       |             1 |
+| CS008214000024 | 2017-01-01 | 2015-01-27       |             1 |
++----------------+------------+------------------+---------------+
+10 rows in set (0.000 sec)

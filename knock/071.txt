@@ -1,0 +1,24 @@
+MariaDB [ds_knock]> select
+    -> c.customer_id,
+    -> cast(r.sales_ymd as date) as sales_ymd,
+    -> cast(c.application_date as date) as application_date,
+    -> period_diff(date_format(r.sales_ymd, '%Y%m'), date_format(c.application_date, '%Y%m')) as elapsed_months
+    -> from receipts r
+    -> join customers c
+    -> on r.customer_id = c.customer_id
+    -> limit 10;
++----------------+------------+------------------+----------------+
+| customer_id    | sales_ymd  | application_date | elapsed_months |
++----------------+------------+------------------+----------------+
+| CS014411000048 | 2017-01-01 | 2015-06-10       |             19 |
+| CS014411000048 | 2017-01-01 | 2015-06-10       |             19 |
+| CS029214000004 | 2017-01-01 | 2015-04-04       |             21 |
+| CS029214000004 | 2017-01-01 | 2015-04-04       |             21 |
+| CS029414000005 | 2017-01-01 | 2015-08-24       |             17 |
+| CS029414000005 | 2017-01-01 | 2015-08-24       |             17 |
+| CS001414000126 | 2017-01-01 | 2015-02-05       |             23 |
+| CS001414000126 | 2017-01-01 | 2015-02-05       |             23 |
+| CS008214000024 | 2017-01-01 | 2015-01-27       |             24 |
+| CS008214000024 | 2017-01-01 | 2015-01-27       |             24 |
++----------------+------------+------------------+----------------+
+10 rows in set (0.001 sec)
