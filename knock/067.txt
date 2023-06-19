@@ -1,0 +1,27 @@
+MariaDB [ds_knock]> select
+    -> new_unit_price,
+    -> (new_unit_price - unit_cost) / new_unit_price as new_profit_rate
+    -> from (
+    ->     select
+    ->     product_cd,
+    ->     ceiling(unit_cost / 0.7) as new_unit_price,
+    ->     unit_cost
+    ->     from products
+    ->     where unit_cost is not null
+    -> ) tmp
+    -> limit 10;
++----------------+-----------------+
+| new_unit_price | new_profit_rate |
++----------------+-----------------+
+|            213 |          0.3005 |
+|            235 |          0.3021 |
+|            248 |          0.3024 |
+|            266 |          0.3008 |
+|            288 |          0.3021 |
+|            320 |          0.3000 |
+|            363 |          0.3003 |
+|            450 |          0.3000 |
+|            535 |          0.3009 |
+|            622 |          0.3006 |
++----------------+-----------------+
+10 rows in set (0.003 sec)
